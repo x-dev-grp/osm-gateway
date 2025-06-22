@@ -26,30 +26,31 @@ public class CorsGlobalConfiguration {
 
     @Bean
     public WebFilter corsFilter() {
-        return (ServerWebExchange exchange, WebFilterChain chain) -> {
+        return (exchange, chain) -> {
             String origin = exchange.getRequest().getHeaders().getOrigin();
-            var request = exchange.getRequest();
-            var response = exchange.getResponse();
+            var response   = exchange.getResponse();
 
-            if (origin != null && allowedOrigins.contains(origin)) {
-                HttpHeaders headers = response.getHeaders();
-                headers.set(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origin); // ensures single value
-                headers.set(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, PUT, DELETE, OPTIONS");
-                headers.set(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Authorization, Content-Type");
-                headers.set(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+            if (origin != null && List.of(
+                    "https://osm-ms-fe.onrender.com",
+                    "http://localhost:4200"
+            ).contains(origin)) {
 
-                logger.info("[CORS] ✅ Allowed origin: {}", origin);
-            } else if (origin != null) {
-                logger.warn("[CORS] ❌ Blocked origin: {}", origin);
+                // 🔑  make sure there is ONE and only ONE value
+                response.getHeaders().remove(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
+                response.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origin);
+                response.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
+                        "GET, POST, PUT, DELETE, OPTIONS");
+                response.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
+                        "Authorization, Content-Type");
+                response.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
             }
 
-            if (request.getMethod() == HttpMethod.OPTIONS) {
-                logger.info("[CORS] Preflight OPTIONS request handled for origin: {}", origin);
+            if (exchange.getRequest().getMethod() == HttpMethod.OPTIONS) {
                 response.setStatusCode(HttpStatus.OK);
                 return response.setComplete();
             }
-
             return chain.filter(exchange);
         };
     }
+
 }
