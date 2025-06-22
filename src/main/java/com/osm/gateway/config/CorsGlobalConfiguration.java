@@ -30,10 +30,7 @@ public class CorsGlobalConfiguration {
             String origin = exchange.getRequest().getHeaders().getOrigin();
             var response   = exchange.getResponse();
 
-            if (origin != null && List.of(
-                    "https://osm-ms-fe.onrender.com",
-                    "http://localhost:4200"
-            ).contains(origin)) {
+            if (origin != null && allowedOrigins.contains(origin)) {
 
                 // 🔑  make sure there is ONE and only ONE value
                 response.getHeaders().remove(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
