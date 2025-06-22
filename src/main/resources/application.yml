@@ -8,6 +8,9 @@ spring:
 
   cloud:
     gateway:
+      default-filters:
+        # Remove whatever the downstream service wrote …
+        - RemoveResponseHeader=Access-Control-Allow-Origin
       discovery:
         locator:
           enabled: true
