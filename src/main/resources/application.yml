@@ -20,7 +20,7 @@ spring:
           predicates:
             - Path=/api/security/**, /oauth2/**, /jwks/**
         - id: oilproductionservice
-          uri: lb://oilproductionservice
+          uri: lb://OILPRODUCTIONSERVICE
           predicates:
             - Path=/api/production/**
         - id: financeservice
