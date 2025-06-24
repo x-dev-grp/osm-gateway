@@ -93,7 +93,7 @@ public class GatewaySecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
-        cors.setAllowedOrigins(List.of(
+        cors.setAllowedOriginPatterns(List.of(
                 "https://osm-ms-fe.onrender.com",   // production frontend
                 "http://localhost:4200"              // local Angular dev
         ));
