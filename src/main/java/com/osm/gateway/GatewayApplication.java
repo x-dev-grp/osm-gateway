@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication(exclude = {
     org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
 })
-@EnableFeignClients
+//@EnableFeignClients
 public class GatewayApplication {
 
 	public static void main(String[] args) {
