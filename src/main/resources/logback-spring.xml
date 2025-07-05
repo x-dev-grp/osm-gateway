@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    
+    <!-- Pretty, colorized console appender for human-friendly logs -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%highlight(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %-5level %cyan(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- Application specific loggers -->
+    <logger name="com.osm.gateway" level="INFO" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+    
+    <!-- Gateway framework loggers with optimized levels -->
+    <logger name="org.springframework.cloud.gateway" level="INFO" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+    
+    <logger name="reactor.netty" level="WARN" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+    
+    <logger name="org.springframework.security" level="WARN" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+    
+    <logger name="org.springframework.web" level="INFO" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+    
+    <!-- Eureka client logging -->
+    <logger name="com.netflix.discovery" level="WARN" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+    
+    <!-- Root logger configuration -->
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+    </root>
+    
+</configuration> 

@@ -37,9 +37,12 @@ spring:
 
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty: DEBUG
-    com.osm.gateway.config.GatewaySecurityConfig: DEBUG
+    com.osm.gateway: INFO
+    org.springframework.cloud.gateway: INFO
+    reactor.netty: WARN
+    org.springframework.security: WARN
+    org.springframework.web: INFO
+    com.netflix.discovery: WARN
 
 eureka:
   client:
