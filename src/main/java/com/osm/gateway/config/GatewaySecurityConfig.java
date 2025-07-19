@@ -98,7 +98,7 @@ public class GatewaySecurityConfig {
                 "http://localhost:4200"              // local Angular dev
         ));
         cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        cors.setAllowedHeaders(List.of("Authorization", "Content-Type","content-disposition"));
+        cors.setAllowedHeaders(List.of("Authorization", "Content-Type","content-disposition","x-tenant-id"));
         cors.setExposedHeaders(List.of("Content-Disposition"));
 
         cors.setAllowCredentials(true);
