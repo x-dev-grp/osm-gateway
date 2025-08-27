@@ -26,7 +26,7 @@ public class GatewaySecurityConfig {
 
     // +++ CORS Configuration Switch +++
     // Set to 'true' to enable CORS, 'false' to disable it.
-    private static final boolean CORS_ENABLED = true;
+    private static final boolean CORS_ENABLED = false;
 
     @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
     private String jwkSetUri;
@@ -94,7 +94,7 @@ public class GatewaySecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
         cors.setAllowedOriginPatterns(List.of(
-                "https://osm-ms-fe.onrender.com",   // production frontend
+                "https://osm-ms-fe-1.onrender.com/",   // production frontend
                 "http://localhost:4200"              // local Angular dev
         ));
         cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
