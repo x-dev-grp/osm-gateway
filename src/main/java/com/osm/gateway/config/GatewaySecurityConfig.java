@@ -26,7 +26,7 @@ public class GatewaySecurityConfig {
 
     // +++ CORS Configuration Switch +++
     // Set to 'true' to enable CORS, 'false' to disable it.
-    private static final boolean CORS_ENABLED = false;
+    private static final boolean CORS_ENABLED = true;
 
     @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
     private String jwkSetUri;
