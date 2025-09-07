@@ -94,8 +94,8 @@ public class GatewaySecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
         cors.setAllowedOriginPatterns(List.of(
-                "https://osm-ms-fe-1.onrender.com",   // production frontend
-                "http://localhost:4200"              // local Angular dev
+                "http://localhost:4200"   ,
+                "https://www.x-dev.pro","https://x-dev.pro"
         ));
         cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cors.setAllowedHeaders(List.of("Authorization", "Content-Type","content-disposition","x-tenant-id"));
