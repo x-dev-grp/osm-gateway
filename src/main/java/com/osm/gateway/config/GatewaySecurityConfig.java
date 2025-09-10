@@ -95,7 +95,7 @@ public class GatewaySecurityConfig {
         CorsConfiguration cors = new CorsConfiguration();
         cors.setAllowedOriginPatterns(List.of(
                 "http://localhost:4200"   ,
-                "https://www.x-dev.pro","https://x-dev.pro"
+                "https://www.x-dev.pro","https://x-dev.pro/api"
         ));
         cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cors.setAllowedHeaders(List.of("Authorization", "Content-Type","content-disposition","x-tenant-id"));

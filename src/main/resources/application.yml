@@ -5,51 +5,42 @@ server:
   max-http-request-header-size: 32KB
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: ${SPRING_APPLICATION_NAME:gateway}
+
   cloud:
     gateway:
+
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true     # lb://securityservice, lb://hrservice, ...
       routes:
-        # Auth server (+ JWKs) via securityservice
-        - id: securityservice
-          uri: lb://securityservice
+        - id: security-service
+          uri: lb://security-service
           predicates:
-            - Path=/oauth2/**, /.well-known/**
-            - Path=/api/security/**, /jwks/**
-        # Business services
+            - Path=/api/security/**, /oauth2/**, /jwks/**
         - id: oilproductionservice
           uri: lb://oilproductionservice
           predicates:
             - Path=/api/production/**
-          # If controllers DON'T include '/api' in their mappings, uncomment:
-          # filters:
-          #   - StripPrefix=1
-
         - id: financeservice
           uri: lb://financeservice
           predicates:
             - Path=/api/finance/**
-          # filters:
-          #   - StripPrefix=1
-
-        - id: hrservice
-          uri: lb://hrservice
+        - id: hrService
+          uri: lb://hrService
           predicates:
             - Path=/api/hr/**
-          # filters:
-          #   - StripPrefix=1
 
   security:
     oauth2:
       resourceserver:
         jwt:
-          # Point to securityservice inside the Docker network
-          issuer-uri: ${OAUTH2_ISSUER_URI:http://securityservice:8088}
-          jwk-set-uri: ${OAUTH2_JWK_SET_URI:http://securityservice:8088/.well-known/jwks.json}
+          issuer-uri: ${OAUTH2_ISSUER_URI:http://localhost:8088}
+          jwk-set-uri: ${OAUTH2_JWK_SET_URI:http://localhost:8088/oauth2/jwks}
 
 logging:
   level:
@@ -58,10 +49,13 @@ logging:
     reactor.netty: WARN
     org.springframework.security: WARN
     org.springframework.web: INFO
+    com.netflix.discovery: WARN
 
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://eureka:8761/eureka/}
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+
   instance:
     prefer-ip-address: true
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
