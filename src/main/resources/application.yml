@@ -59,3 +59,10 @@ eureka:
   instance:
     prefer-ip-address: true
     hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
+management:
+  endpoint:
+    web:
+      exposure:
+        include:*
+    health:
+      show-details: always
