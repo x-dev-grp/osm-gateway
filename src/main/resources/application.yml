@@ -38,10 +38,6 @@ spring:
           uri: lb://abiooc-inventaire
           predicates:
             - Path=/api/inventaire/**
-        - id: osm-producion
-          uri: lb://PRODUCTION-SERVICE
-          predicates:
-            - Path=/api/ordreConditionement/**
 
   security:
     oauth2:
