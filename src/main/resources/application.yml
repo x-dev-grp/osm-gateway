@@ -69,12 +69,12 @@ spring:
 #  FIXED: DEBUG logging so you can see requests arriving and being routed
 logging:
   level:
-    com.osm.gateway: DEBUG
-    org.springframework.cloud.gateway: DEBUG       # shows routing decisions
-    reactor.netty.http.server: DEBUG               # shows raw incoming requests
-    org.springframework.security: DEBUG            # shows auth filter decisions
-    org.springframework.web: DEBUG
-    com.netflix.discovery: WARN                    # eureka is noisy, keep WARN
+    com.osm.gateway: INFO
+    org.springframework.cloud.gateway: INFO
+    reactor.netty: WARN
+    org.springframework.security: WARN
+    org.springframework.web: INFO
+    com.netflix.discovery: WARN
 
 eureka:
   client:
