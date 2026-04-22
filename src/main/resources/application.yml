@@ -57,7 +57,7 @@ spring:
         - id: osm-producion
           uri: lb://PRODUCTION-SERVICE
           predicates:
-            - Path=/api/ordreConditionement/**
+            - Path=/api/ordreConditionement/**, /api/search/**
 
   security:
     oauth2:
