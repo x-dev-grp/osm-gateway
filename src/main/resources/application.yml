@@ -42,22 +42,22 @@ spring:
           uri: lb://oilproductionservice
           predicates:
             - Path=/api/production/**
-        - id: financeservice
-          uri: lb://financeservice
+        - id: finance-service
+          uri: lb://finance-service
           predicates:
             - Path=/api/finance/**
-        - id: hrService
-          uri: lb://hrService
+        - id: hr-service
+          uri: lb://hr-service
           predicates:
             - Path=/api/hr/**
-        - id: abiooc-inventaire
-          uri: lb://abiooc-inventaire
+        - id: inventory-service
+          uri: lb://inventory-service
           predicates:
             - Path=/api/inventaire/**
-        - id: osm-producion
-          uri: lb://PRODUCTION-SERVICE
+        - id: conditioning-service
+          uri: lb://conditioning-service
           predicates:
-            - Path=/api/ordreConditionement/**, /api/search/**
+            - Path=/api/**
 
   security:
     oauth2:
