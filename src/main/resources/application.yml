@@ -73,11 +73,13 @@ logging:
     org.springframework.cloud.gateway: INFO
     reactor.netty: WARN
     org.springframework.security: WARN
-    org.springframework.web: INFO
-    com.netflix.discovery: WARN
+    org.springframework.web: ${LOG_LEVEL_WEB:INFO}
+    com.netflix.discovery: ${LOG_LEVEL_EUREKA:WARN}
+    org.springframework.web.client.RestTemplate: ${LOG_LEVEL_REST:WARN}
 
 eureka:
   client:
+    registry-fetch-interval-seconds: 5
     service-url:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
 

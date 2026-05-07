@@ -1,34 +1,29 @@
 # syntax=docker/dockerfile:1.4
 
+########## Build stage ##########
 FROM maven:3.9.8-eclipse-temurin-21 AS build
 WORKDIR /app
 
-COPY pom.xml .
-RUN --mount=type=secret,id=maven_settings,required \
-    --mount=type=cache,target=/root/.m2 \
-    set -eux; \
-    mkdir -p /root/.m2; \
-    install -m 600 /run/secrets/maven_settings /root/.m2/settings.xml; \
-    mvn -B -s /root/.m2/settings.xml -DskipTests dependency:go-offline
+COPY pom.xml ./
+RUN --mount=type=cache,target=/root/.m2 \
+    --mount=type=secret,id=maven_settings,target=/root/.m2/settings.xml,required=false \
+    mvn -B -U -DskipTests dependency:go-offline
 
 COPY src ./src
-RUN --mount=type=secret,id=maven_settings,required \
-    --mount=type=cache,target=/root/.m2 \
-    set -eux; \
-    mkdir -p /root/.m2; \
-    install -m 600 /run/secrets/maven_settings /root/.m2/settings.xml; \
-    mvn -B -s /root/.m2/settings.xml -DskipTests clean package
+RUN --mount=type=cache,target=/root/.m2 \
+    --mount=type=secret,id=maven_settings,target=/root/.m2/settings.xml,required=false \
+    mvn -B -DskipTests package
 
-FROM eclipse-temurin:21-jre
+########## Runtime stage ##########
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 WORKDIR /app
-RUN useradd -r -u 10001 -g root appuser
 
-COPY --from=build /app/target/*.jar /app/app.jar
 ARG SERVICE_PORT=8084
 ENV SERVER_PORT=${SERVICE_PORT}
 ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75" \
     SPRING_PROFILES_ACTIVE=prod
 
-EXPOSE ${SERVICE_PORT}
-USER appuser
+COPY --from=build /app/target/*.jar /app/app.jar
+
+EXPOSE ${SERVER_PORT}
 ENTRYPOINT ["java","-jar","/app/app.jar"]
